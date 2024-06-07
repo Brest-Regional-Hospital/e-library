@@ -1,3 +1,5 @@
+import './styles/index.scss';
+
 export const App = () => {
-    return <div>Hello</div>;
+    return <div className="app">Hello</div>;
 };
