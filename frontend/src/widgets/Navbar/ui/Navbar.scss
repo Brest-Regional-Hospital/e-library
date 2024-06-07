@@ -4,5 +4,68 @@
     background: #ffffff;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 20px;
+}
+
+.navbar__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - var(--sidebar-width));
+}
+
+.navbar__logo {
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: 600;
+    color: #1814f3;
+}
+
+.navbar__page-name {
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.navbar__btns {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar__login-btn {
+    background-color: #f5f7fa;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 12px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar__login-btn:hover {
+    filter: brightness(95%);
+}
+
+.navbar__login-logo {
+    width: 25px;
+    height: 25px;
+    fill: #718ebf;
+}
+
+.navbar__add-btn {
+    background-color: #f5f7fa;
+    color: var(--primary-color);
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 12px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar__add-btn:hover {
+    filter: brightness(95%);
 }

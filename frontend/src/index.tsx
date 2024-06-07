@@ -1,8 +1,15 @@
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { App } from 'app/App';
 import ReactDOM from 'react-dom/client';
+import 'dayjs/locale/ru';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement,
 );
 
-root.render(<App />);
+root.render(
+    <LocalizationProvider adapterLocale="ru" dateAdapter={AdapterDayjs}>
+        <App />
+    </LocalizationProvider>,
+);
