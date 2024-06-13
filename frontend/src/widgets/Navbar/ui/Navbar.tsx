@@ -16,7 +16,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import BookIcon from '@mui/icons-material/Book';
 import LoginIcon from '@mui/icons-material/Login';
 
-import { useState } from 'react';
+import { useState, MouseEvent } from 'react';
 
 const pages = ['Каталог', 'Поиск'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -25,10 +25,11 @@ export const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+
+    const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
 

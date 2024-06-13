@@ -3,7 +3,7 @@ import Book from '../../../../public/content/books.jpg';
 
 export default function BookCard() {
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card>
             <CardMedia sx={{ height: 160 }} image={Book} />
             <CardContent>
                 <Typography
