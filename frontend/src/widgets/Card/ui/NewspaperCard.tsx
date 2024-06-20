@@ -3,7 +3,7 @@ import Newspaper from '../../../../public/content/newspapers.jpg';
 
 export default function NewspaperCard() {
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card>
             <CardMedia sx={{ height: 160 }} image={Newspaper} />
             <CardContent>
                 <Typography
