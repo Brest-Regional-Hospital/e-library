@@ -35,7 +35,7 @@ export const Header = (props: HeaderProps) => {
     const { title, clickable, onClick } = props;
 
     return (
-        <TitleContainer onClick={onClick}>
+        <TitleContainer onClick={clickable ? onClick : undefined}>
             <PageTitleTypography variant="h3">{title}</PageTitleTypography>
             {clickable && (
                 <TitleIcon variant="body1">
