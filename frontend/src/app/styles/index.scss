@@ -5,5 +5,10 @@
     background: var(--bg-color);
     color: var(--primary-color);
     min-height: 100vh;
-    padding-bottom: 50px;
+}
+
+.page-container {
+    padding: 0 24px 50px 24px;
+    max-width: 1536px;
+    margin: 0 auto;
 }

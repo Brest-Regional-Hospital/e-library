@@ -1,7 +1,16 @@
-import { Card, CardMedia, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { MockPublication } from 'pages/CatalogPage/lib/mockPublications/mockPublications';
 import Book from '../../../../public/content/books.jpg';
 
-export default function BookCard() {
+interface BookCardProps {
+    publication: MockPublication;
+}
+
+export const BookCard = (props: BookCardProps) => {
+    const { publication } = props;
+    const { bookNumber, title, category, genre, author, amountAvailable } =
+        publication;
+
     return (
         <Card>
             <CardMedia sx={{ height: 160 }} image={Book} />
@@ -11,20 +20,20 @@ export default function BookCard() {
                     color="text.secondary"
                     gutterBottom
                 >
-                    Книга - Художественный жанр
+                    {category} - {genre}
                 </Typography>
                 <Typography variant="h5" component="div">
-                    Цветы для Элджернона
+                    {title}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Даниель Киз
+                    {author}
                 </Typography>
                 <Typography variant="body2">
-                    Количество в наличии: 3
+                    Количество в наличии: {amountAvailable}
                     <br />
-                    Номер книги: 223-456
+                    Номер книги: {bookNumber}
                 </Typography>
             </CardContent>
         </Card>
     );
-}
+};

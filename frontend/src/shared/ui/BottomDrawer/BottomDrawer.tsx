@@ -1,13 +1,16 @@
 import { SwipeableDrawer } from '@mui/material';
-import { Filters } from 'widgets/Filters/ui/Filters';
+import { ReactNode } from 'react';
 
 interface BottomDrawerProps {
     isOpen: boolean;
     open: () => void;
     close: () => void;
+    children: ReactNode;
 }
 
-export const BottomDrawer = ({ isOpen, open, close }: BottomDrawerProps) => {
+export const BottomDrawer = (props: BottomDrawerProps) => {
+    const { isOpen, open, close, children } = props;
+
     return (
         <SwipeableDrawer
             anchor="bottom"
@@ -15,7 +18,7 @@ export const BottomDrawer = ({ isOpen, open, close }: BottomDrawerProps) => {
             onClose={close}
             onOpen={open}
         >
-            <Filters />
+            {children}
         </SwipeableDrawer>
     );
 };
