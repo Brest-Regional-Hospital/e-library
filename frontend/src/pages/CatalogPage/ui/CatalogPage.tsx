@@ -1,4 +1,5 @@
 import { Box, Card, Grid, styled } from '@mui/material';
+import { useState } from 'react';
 import { BottomDrawer } from 'widgets/BottomDrawer/ui/BottomDrawer';
 import BookCard from 'widgets/Card/ui/BookCard';
 import { Filters } from 'widgets/Filters/ui/Filters';
@@ -37,11 +38,16 @@ const CatalogGridItem = styled(Grid)(({ theme }) => ({
 }));
 
 export const CatalogPage = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const open = () => setIsOpen(true);
+    const close = () => setIsOpen(false);
+
     return (
         <>
-            <BottomDrawer />
+            <BottomDrawer isOpen={isOpen} open={open} close={close} />
             <CatalogContainer>
-                <Header title="Весь каталог" clickable />
+                <Header title="Весь каталог" clickable onClick={open} />
 
                 <div
                     style={{

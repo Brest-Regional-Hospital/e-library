@@ -1,13 +1,13 @@
 import { SwipeableDrawer } from '@mui/material';
-import { useState } from 'react';
 import { Filters } from 'widgets/Filters/ui/Filters';
 
-export const BottomDrawer = () => {
-    const [isOpen, setIsOpen] = useState(false);
+interface BottomDrawerProps {
+    isOpen: boolean;
+    open: () => void;
+    close: () => void;
+}
 
-    const open = () => setIsOpen(true);
-    const close = () => setIsOpen(false);
-
+export const BottomDrawer = ({ isOpen, open, close }: BottomDrawerProps) => {
     return (
         <SwipeableDrawer
             anchor="bottom"

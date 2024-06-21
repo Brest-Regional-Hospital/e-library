@@ -28,13 +28,14 @@ const TitleIcon = styled(Typography)(({ theme }) => ({
 interface HeaderProps {
     title: string;
     clickable?: boolean;
+    onClick?: () => void;
 }
 
 export const Header = (props: HeaderProps) => {
-    const { title, clickable } = props;
+    const { title, clickable, onClick } = props;
 
     return (
-        <TitleContainer>
+        <TitleContainer onClick={onClick}>
             <PageTitleTypography variant="h3">{title}</PageTitleTypography>
             {clickable && (
                 <TitleIcon variant="body1">
