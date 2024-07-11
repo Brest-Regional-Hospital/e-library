@@ -1,9 +1,9 @@
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-import { MockPublication } from 'pages/CatalogPage/lib/mockPublications/mockPublications';
+import { Publication } from 'pages/CatalogPage/lib/mockPublications/mockPublications';
 import Book from '../../../../public/content/books.jpg';
 
 interface BookCardProps {
-    publication: MockPublication;
+    publication: Publication;
 }
 
 export const BookCard = (props: BookCardProps) => {

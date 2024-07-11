@@ -1,9 +1,14 @@
-import { Card, CardMedia, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Publication } from 'pages/CatalogPage';
 import Magazine from '../../../../public/content/magazines.jpg';
 
-export default function MagazineCard() {
+interface MagazineCardProps {
+    publication: Publication;
+}
+
+export default function MagazineCard({ publication }: MagazineCardProps) {
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card>
             <CardMedia sx={{ height: 160 }} image={Magazine} />
             <CardContent>
                 <Typography
@@ -14,12 +19,19 @@ export default function MagazineCard() {
                     Журнал
                 </Typography>
                 <Typography variant="h5" component="div">
-                    В мире наук
+                    {publication.title}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Издан 21.13.2020
+                    Издан{' '}
+                    {publication.publicationDate.toLocaleString('ru-ru', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                    })}
                 </Typography>
-                <Typography variant="body2">Количество в наличии: 3</Typography>
+                <Typography variant="body2">
+                    Количество в наличии: {publication.amountAvailable}
+                </Typography>
             </CardContent>
         </Card>
     );

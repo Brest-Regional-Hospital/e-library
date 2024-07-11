@@ -1,6 +1,6 @@
 export const enum Categories {
-    All = 'ALL',
-    Book = 'BOOK',
-    Magazine = 'MAGAZINE',
-    Newspaper = 'NEWSPAPER',
+    All = 'all',
+    Book = 'books',
+    Magazine = 'magazines',
+    Newspaper = 'newspapers',
 }

@@ -19,6 +19,7 @@ module.exports = {
     },
     plugins: ['react', '@typescript-eslint'],
     rules: {
+        'lines-between-class-members': ['off'],
         'prettier/prettier': [
             'warn',
             {

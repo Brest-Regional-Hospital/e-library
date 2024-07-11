@@ -1,7 +1,12 @@
-import { Card, CardMedia, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Publication } from 'pages/CatalogPage';
 import Newspaper from '../../../../public/content/newspapers.jpg';
 
-export default function NewspaperCard() {
+interface NewspaperCardProps {
+    publication: Publication;
+}
+
+export default function NewspaperCard({ publication }: NewspaperCardProps) {
     return (
         <Card>
             <CardMedia sx={{ height: 160 }} image={Newspaper} />
@@ -14,12 +19,19 @@ export default function NewspaperCard() {
                     Газета
                 </Typography>
                 <Typography variant="h5" component="div">
-                    Вечерний Минск
+                    {publication.title}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Издана 30.10.2018
+                    Издана{' '}
+                    {publication.publicationDate.toLocaleString('ru-ru', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                    })}
                 </Typography>
-                <Typography variant="body2">Количество в наличии: 3</Typography>
+                <Typography variant="body2">
+                    Количество в наличии: {publication.amountAvailable}
+                </Typography>
             </CardContent>
         </Card>
     );
