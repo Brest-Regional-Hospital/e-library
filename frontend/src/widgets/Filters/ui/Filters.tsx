@@ -81,6 +81,8 @@ export const Filters = observer(({ close }: FiltersProps) => {
 
         catalogStore.resetFilters();
         catalogStore.fetchPublications();
+
+        close?.();
     };
 
     return (
