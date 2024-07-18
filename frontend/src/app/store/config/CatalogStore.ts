@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { makeAutoObservable } from 'mobx';
 import {
     MockPublications,
@@ -34,10 +35,12 @@ export class CatalogStore {
         }, 2000);
     }
 
-    setFilters(filters: any, genres: string[], authors: string[]) {
+    setFilters(filters: any, genres: string[], authors: string[], date: any) {
         this.filters = filters;
 
-        this.filters = { ...filters, genres, authors };
+        const formattedDate = date ? dayjs(date).format('YYYY/MM/DD') : date;
+
+        this.filters = { ...filters, genres, authors, date: formattedDate };
     }
 
     resetFilters() {
@@ -116,6 +119,16 @@ export class CatalogStore {
                 filteredMockPublications,
                 'author',
                 this.filters.authors,
+            );
+        }
+
+        console.log(filteredMockPublications);
+        console.log(this.filters.date);
+        if (this.filters.date && this.filters.date.length > 0) {
+            filteredMockPublications = this.filterAllCategories(
+                filteredMockPublications,
+                'publicationDate',
+                [this.filters.date],
             );
         }
 

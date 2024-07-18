@@ -4,7 +4,7 @@ export type Publication = {
     category?: string;
     genre?: string;
     author?: string;
-    publicationDate?: Date;
+    publicationDate?: string;
     amountAvailable: number;
 };
 
@@ -80,54 +80,54 @@ export const mockPublications: MockPublications = {
     newspapers: [
         {
             title: 'Вечерний Минск',
-            publicationDate: new Date('2018/10/30'),
+            publicationDate: '2018/10/30',
             amountAvailable: 4,
         },
         {
             title: 'Брест Сегодня',
-            publicationDate: new Date('2019/01/22'),
+            publicationDate: '2019/01/22',
             amountAvailable: 1,
         },
         {
             title: 'Новостные Будни',
-            publicationDate: new Date('2021/10/09'),
+            publicationDate: '2021/10/09',
             amountAvailable: 2,
         },
         {
             title: 'Медицина Экспресс',
-            publicationDate: new Date('2017/09/12'),
+            publicationDate: '2017/09/12',
             amountAvailable: 2,
         },
         {
             title: 'Вестник Субботы',
-            publicationDate: new Date('2023/01/05'),
+            publicationDate: '2023/01/05',
             amountAvailable: 4,
         },
     ],
     magazines: [
         {
             title: 'В мире наук',
-            publicationDate: new Date('2018/10/30'),
+            publicationDate: '2018/10/30',
             amountAvailable: 4,
         },
         {
             title: 'Медицина с нами',
-            publicationDate: new Date('2019/01/22'),
+            publicationDate: '2019/01/22',
             amountAvailable: 1,
         },
         {
             title: 'Будни хирурга',
-            publicationDate: new Date('2021/10/09'),
+            publicationDate: '2021/10/09',
             amountAvailable: 2,
         },
         {
             title: 'На страже здоровья',
-            publicationDate: new Date('2017/09/12'),
+            publicationDate: '2017/09/12',
             amountAvailable: 2,
         },
         {
             title: 'Когда если не сегодня',
-            publicationDate: new Date('2023/01/05'),
+            publicationDate: '2023/01/05',
             amountAvailable: 4,
         },
     ],

@@ -23,11 +23,14 @@ export default function MagazineCard({ publication }: MagazineCardProps) {
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
                     Издан{' '}
-                    {publication.publicationDate.toLocaleString('ru-ru', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                    })}
+                    {new Date(publication.publicationDate).toLocaleString(
+                        'ru-ru',
+                        {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric',
+                        },
+                    )}
                 </Typography>
                 <Typography variant="body2">
                     Количество в наличии: {publication.amountAvailable}

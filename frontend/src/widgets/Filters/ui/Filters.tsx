@@ -54,11 +54,12 @@ export const Filters = observer(({ close }: FiltersProps) => {
     });
     const [genre, setGenre] = useState<any>();
     const [author, setAuthors] = useState<any>();
+    const [date, setDate] = useState<any>();
 
     const onFormSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
-        catalogStore.setFilters(formValues, genre, author);
+        catalogStore.setFilters(formValues, genre, author, date);
         catalogStore.fetchPublications();
 
         close?.();
@@ -74,6 +75,7 @@ export const Filters = observer(({ close }: FiltersProps) => {
     const onResetButtonClick = () => {
         setGenre(undefined);
         setAuthors(undefined);
+        setDate(undefined);
         setFormValues({
             title: '',
             category: Categories.All,
@@ -177,6 +179,8 @@ export const Filters = observer(({ close }: FiltersProps) => {
                 {(formValues.category === Categories.Magazine ||
                     formValues.category === Categories.Newspaper) && (
                     <DatePicker
+                        value={date}
+                        onChange={(value) => setDate(value)}
                         label="Дата издания"
                         format="YYYY/MM/DD"
                         sx={{ marginTop: '15px', width: '100%' }}
