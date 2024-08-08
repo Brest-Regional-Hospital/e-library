@@ -1,21 +1,12 @@
 import dayjs from 'dayjs';
 import { makeAutoObservable } from 'mobx';
-import {
-    MockPublications,
-    mockPublications,
-    Publication,
-    PublicationsCategories,
-} from 'pages/CatalogPage';
-import { Categories } from 'widgets/Filters/lib/categories';
+import { mockPublications, Publication } from 'pages/CatalogPage';
+import { Categories } from 'features/Filters/lib/categories';
 
 export class CatalogStore {
-    publications: MockPublications = {
-        books: [],
-        newspapers: [],
-        magazines: [],
-    };
-    allPublications: Publication[] = [];
+    publications: Publication[] = [];
     isLoading = false;
+    isAddPubLoading = false;
     filters: any = {};
 
     constructor() {
@@ -30,9 +21,53 @@ export class CatalogStore {
             const filteredMockPublications =
                 this.filterMockPublications(mockPublications);
             this.setPublications(filteredMockPublications);
-            this.setAllPublications();
             this.isLoading = false;
         }, 2000);
+    }
+
+    addPublication(publication: Publication) {
+        this.isAddPubLoading = true;
+        const lastId = this.publications[this.publications.length - 1].id + 1;
+        const publicationWithId = { ...publication, id: lastId };
+
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                this.publications.unshift(publicationWithId);
+                this.isAddPubLoading = false;
+
+                resolve('');
+            }, 2000);
+        });
+    }
+
+    editPublication(publication: Publication, id: number) {
+        this.isAddPubLoading = true;
+
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                this.publications = this.publications.map((p) =>
+                    p.id === id ? publication : p,
+                );
+                this.isAddPubLoading = false;
+
+                resolve('');
+            }, 2000);
+        });
+    }
+
+    deletePublication(id: number) {
+        this.isLoading = true;
+
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                this.publications = this.publications.filter(
+                    (p) => p.id !== id,
+                );
+                this.isLoading = false;
+
+                resolve('');
+            }, 2000);
+        });
     }
 
     setFilters(filters: any, genres: string[], authors: string[], date: any) {
@@ -48,123 +83,49 @@ export class CatalogStore {
     }
 
     private clearPublications() {
-        this.publications = {
-            books: [],
-            newspapers: [],
-            magazines: [],
-        };
+        this.publications = [];
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    private filterPublications<T extends Publication>(
-        mockPublications: T[],
-        property: keyof T,
-        searchTerms: string[],
-    ): T[] {
-        return mockPublications.filter((publication) =>
-            searchTerms.some((term) =>
-                publication[property]
-                    ?.toString()
-                    .toLowerCase()
-                    .includes(term.toLowerCase()),
-            ),
-        );
-    }
-
-    private filterAllCategories = (
-        publications: MockPublications,
-        searchTarget: keyof Publication,
-        searchTerm: string[],
-    ): MockPublications => {
-        return {
-            books: this.filterPublications(
-                publications.books,
-                searchTarget,
-                searchTerm,
-            ),
-            magazines: this.filterPublications(
-                publications.magazines,
-                searchTarget,
-                searchTerm,
-            ),
-            newspapers: this.filterPublications(
-                publications.newspapers,
-                searchTarget,
-                searchTerm,
-            ),
-        };
-    };
-
-    private filterMockPublications(mockPublications: MockPublications) {
+    private filterMockPublications(mockPublications: Publication[]) {
         let filteredMockPublications = mockPublications;
 
         if (this.filters.title) {
-            filteredMockPublications = this.filterAllCategories(
-                mockPublications,
-                'title',
-                [this.filters.title],
+            filteredMockPublications = filteredMockPublications.filter(
+                (p) =>
+                    p.title
+                        .toLowerCase()
+                        .indexOf(this.filters.title.toLowerCase()) > -1,
             );
         }
 
         if (this.filters.genres && this.filters.genres.length > 0) {
-            filteredMockPublications = this.filterAllCategories(
-                filteredMockPublications,
-                'genre',
-                this.filters.genres,
+            filteredMockPublications = filteredMockPublications.filter((p) =>
+                this.filters.genres.includes(p.genre),
             );
         }
 
         if (this.filters.authors && this.filters.authors.length > 0) {
-            filteredMockPublications = this.filterAllCategories(
-                filteredMockPublications,
-                'author',
-                this.filters.authors,
+            filteredMockPublications = filteredMockPublications.filter((p) =>
+                this.filters.authors.includes(p.author),
             );
         }
 
-        console.log(filteredMockPublications);
-        console.log(this.filters.date);
         if (this.filters.date && this.filters.date.length > 0) {
-            filteredMockPublications = this.filterAllCategories(
-                filteredMockPublications,
-                'publicationDate',
-                [this.filters.date],
+            filteredMockPublications = filteredMockPublications.filter(
+                (p) => p.publicationDate === this.filters.date,
             );
         }
 
-        if (this.filters.category) {
-            filteredMockPublications = this.filterByCategory(
-                filteredMockPublications,
-                this.filters.category,
+        if (this.filters.category && this.filters.category !== Categories.All) {
+            filteredMockPublications = filteredMockPublications.filter(
+                (p) => p.type === this.filters.category,
             );
         }
 
         return filteredMockPublications;
     }
 
-    private setPublications(publications: MockPublications) {
+    private setPublications(publications: Publication[]) {
         this.publications = publications;
-    }
-
-    private setAllPublications() {
-        this.allPublications = Object.values(this.publications).flat();
-    }
-
-    // eslint-disable-next-line class-methods-use-this
-    private filterByCategory(
-        publications: MockPublications,
-        category: PublicationsCategories,
-    ): MockPublications {
-        const { [category]: selectedCategory, ...rest } = publications;
-
-        if (category === (Categories.All as any)) return publications;
-
-        return {
-            [category]: selectedCategory || [],
-            ...Object.keys(rest).reduce(
-                (acc, k) => ({ ...acc, [k]: [] }),
-                {} as MockPublications,
-            ),
-        };
     }
 }

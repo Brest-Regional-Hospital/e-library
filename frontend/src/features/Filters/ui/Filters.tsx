@@ -16,25 +16,27 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { useStore } from 'app/store';
 import { observer } from 'mobx-react-lite';
 import {
-    MockPublications,
     mockPublications,
+    Publication,
 } from 'pages/CatalogPage/lib/mockPublications/mockPublications';
 import React, { useState } from 'react';
 import { Categories } from '../lib/categories';
 import { FiltersCard, FiltersContainer } from './FiltersStyle';
 
-const produceAuthors = (mockPublications: MockPublications) => {
-    const authors = mockPublications.books.map((b) => b.author);
-    const surnames = authors.map((author) => author.split(' ')[1]);
+const produceAuthors = (mockPublications: Publication[]) => {
+    const surnames = mockPublications
+        .filter((p) => p.type === 'Книга')
+        .map((b) => b.author);
     const uniqueSurnames = Array.from(new Set(surnames));
 
     return uniqueSurnames;
 };
 
-const produceGenres = (mockPublications: MockPublications) => {
-    const genres = mockPublications.books.map((b) => b.genre);
-    const flatGenres = genres.map((author) => author.split(' ')[0]);
-    const uniqueGenres = Array.from(new Set(flatGenres));
+const produceGenres = (mockPublications: Publication[]) => {
+    const genres = mockPublications
+        .filter((p) => p.type === 'Книга')
+        .map((b) => b.genre);
+    const uniqueGenres = Array.from(new Set(genres));
 
     return uniqueGenres;
 };
@@ -148,6 +150,7 @@ export const Filters = observer(({ close }: FiltersProps) => {
                                 }}
                                 renderInput={(params) => (
                                     <TextField
+                                        // eslint-disable-next-line react/jsx-props-no-spreading
                                         {...params}
                                         label="Жанр литературы"
                                         placeholder="Жанр"
@@ -167,6 +170,7 @@ export const Filters = observer(({ close }: FiltersProps) => {
                                 }}
                                 renderInput={(params) => (
                                     <TextField
+                                        // eslint-disable-next-line react/jsx-props-no-spreading
                                         {...params}
                                         label="Автор"
                                         placeholder="Автор"

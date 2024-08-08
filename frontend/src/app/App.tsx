@@ -1,5 +1,5 @@
 import { CatalogPage } from 'pages/CatalogPage';
-import { Navbar } from 'widgets/Navbar';
+import { Navbar } from 'features/Navbar';
 import './styles/index.scss';
 
 export const App = () => {

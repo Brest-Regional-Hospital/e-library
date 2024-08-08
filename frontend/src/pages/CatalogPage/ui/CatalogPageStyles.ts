@@ -8,13 +8,15 @@ export const CatalogContainer = styled(Box)(({ theme }) => ({
 
     [theme.breakpoints.down(1000)]: {
         gridTemplateColumns: '1fr',
-        rowGap: '20px',
+        rowGap: '10px',
     },
 }));
 
 export const HeaderContainer = styled(Box)(({ theme }) => ({
-    gridColumn: '1 / -1',
     marginTop: '40px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
 
     [theme.breakpoints.down(1000)]: {
         marginTop: '30px',

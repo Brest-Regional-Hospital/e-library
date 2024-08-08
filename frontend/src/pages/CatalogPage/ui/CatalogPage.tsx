@@ -1,19 +1,17 @@
 /* eslint-disable indent */
-import { Typography, useMediaQuery } from '@mui/material';
+import { Button, Typography, useMediaQuery } from '@mui/material';
 import { useStore } from 'app/store';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { BottomDrawer } from 'shared/ui/BottomDrawer/BottomDrawer';
 import { PageHeader } from 'shared/ui/PageHeader/PageHeader';
 import { SkeletonCard } from 'shared/ui/SkeletonCard/SkeletonCard';
-import { BookCard } from 'widgets/Card';
-import MagazineCard from 'widgets/Card/ui/MagazineCard';
-import NewspaperCard from 'widgets/Card/ui/NewspaperCard';
-import { Filters } from 'widgets/Filters/ui/Filters';
-import {
-    mockPublications,
-    PublicationsCategories,
-} from '../lib/mockPublications/mockPublications';
+import { BookCard } from 'features/Card';
+import MagazineCard from 'features/Card/ui/MagazineCard';
+import NewspaperCard from 'features/Card/ui/NewspaperCard';
+import { Filters } from 'features/Filters/ui/Filters';
+import AddIcon from '@mui/icons-material/Add';
+import { AddPublicationModal } from 'features/Modal/AddPublicationModal';
 import {
     CatalogContainer,
     FiltersContainer,
@@ -24,10 +22,14 @@ import {
 export const CatalogPage = observer(() => {
     const { catalogStore } = useStore();
     const [isOpen, setIsOpen] = useState(false);
+    const [isModalOpen, setIsOpenModal] = useState(false);
     const isHeaderClickable = useMediaQuery('(max-width:1000px)');
 
     const open = () => setIsOpen(true);
     const close = () => setIsOpen(false);
+
+    const openModal = () => setIsOpenModal(true);
+    const closeModal = () => setIsOpenModal(false);
 
     useEffect(() => {
         catalogStore.fetchPublications();
@@ -41,34 +43,47 @@ export const CatalogPage = observer(() => {
             <CatalogContainer>
                 <HeaderContainer>
                     <PageHeader
-                        title="Весь каталог"
+                        title="Каталог"
                         clickable={isHeaderClickable}
                         onClick={open}
                     />
+                    <Button
+                        onClick={openModal}
+                        variant="contained"
+                        endIcon={<AddIcon />}
+                    >
+                        Добавить
+                    </Button>
                 </HeaderContainer>
+
+                <br />
 
                 <PublicationsContainer>
                     {catalogStore.isLoading &&
                         Array.from({ length: 9 }).map((_, index) => (
+                            // eslint-disable-next-line react/no-array-index-key
                             <SkeletonCard key={`skeleton-${index}`} />
                         ))}
                     {catalogStore.publications &&
-                    catalogStore.allPublications.length > 0 ? (
-                        Object.keys(catalogStore.publications).map((type) => {
-                            const Component = {
-                                books: BookCard,
-                                magazines: MagazineCard,
-                                newspapers: NewspaperCard,
-                            }[type];
+                    catalogStore.publications.length > 0 ? (
+                        catalogStore.publications.map((publication) => {
+                            if (publication.type === 'Книга') {
+                                return <BookCard publication={publication} />;
+                            }
 
-                            return catalogStore.publications[
-                                type as PublicationsCategories
-                            ].map((publication) => (
-                                <Component
-                                    key={publication.bookNumber}
-                                    publication={publication}
-                                />
-                            ));
+                            if (publication.type === 'Журнал') {
+                                return (
+                                    <MagazineCard publication={publication} />
+                                );
+                            }
+
+                            if (publication.type === 'Газета') {
+                                return (
+                                    <NewspaperCard publication={publication} />
+                                );
+                            }
+
+                            return <BookCard publication={publication} />;
                         })
                     ) : (
                         <Typography
@@ -84,6 +99,8 @@ export const CatalogPage = observer(() => {
                     <Filters />
                 </FiltersContainer>
             </CatalogContainer>
+
+            <AddPublicationModal open={isModalOpen} handleClose={closeModal} />
         </>
     );
 });
