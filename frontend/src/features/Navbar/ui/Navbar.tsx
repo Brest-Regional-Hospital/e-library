@@ -17,28 +17,20 @@ import BookIcon from '@mui/icons-material/Book';
 import LoginIcon from '@mui/icons-material/Login';
 
 import { useState, MouseEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const pages = ['Каталог', 'Поиск'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const Navbar = () => {
+    const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
 
-    const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
-    };
-
     const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
+        navigate('/');
     };
 
     return (
@@ -155,6 +147,7 @@ export const Navbar = () => {
                     <Box sx={{ flexGrow: 0 }}>
                         <Button
                             startIcon={<LoginIcon />}
+                            onClick={() => navigate('/login')}
                             size="large"
                             aria-label="login"
                             color="inherit"
